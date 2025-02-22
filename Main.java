@@ -1,10 +1,11 @@
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Evento evento;
         Scanner scan = new Scanner(System.in);
+        Concerto concerto;
 
         System.out.println("Quale evento vuoi proporre: ");
         String nomeEvento = scan.nextLine();
@@ -24,32 +25,31 @@ public class Main {
         scan.nextLine();
         
         try {
-
-            evento = new Evento(nomeEvento, LocalDate.of(anno, mese, giorno), postiTotali);
+            concerto = new Concerto(nomeEvento, LocalDate.of(anno, mese, giorno), postiTotali, LocalTime.of(12, 30), 12.54);
 
             System.out.print("Quante prenotazioni vuoi fare: ");
             int numeroPrenotazioni = scan.nextInt();
             scan.nextLine();
-            if(numeroPrenotazioni > (evento.getPostiTotali() - evento.getPostiPrenotati())){
+            if(numeroPrenotazioni > (concerto.getPostiTotali() - concerto.getPostiPrenotati())){
                 throw new IllegalArgumentException("Non ci sono abbastanza posti disponibili");
             }
             for (int i = 0; i < numeroPrenotazioni; i++) {
-                evento.prenotaPosto();
+                concerto.prenotaPosto();
             }
 
             System.out.print("Quante prenotazioni vuoi disdire: ");
             int numeroDisdette = scan.nextInt();
             scan.nextLine();
-            if(numeroDisdette > evento.getPostiPrenotati()){
+            if(numeroDisdette > concerto.getPostiPrenotati()){
                 throw new IllegalArgumentException("Le disdette superano le prenotazioni");
             }
             for(int i = 0; i < numeroDisdette; i++){
-                evento.disdiciPosto();
+                concerto.disdiciPosto();
             }
 
-            System.out.println(evento.toString());
+            System.out.println(concerto.toString());
 
-        } catch (IllegalAccessException | IllegalArgumentException | IllegalStateException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
             System.out.println("Errore: " + e.getMessage());
         }
     }
