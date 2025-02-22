@@ -20,33 +20,37 @@ public class Main {
 
         System.out.println("Scegli la capienza massima: ");
         int postiTotali = scan.nextInt();
+
+        scan.nextLine();
         
         try {
 
             evento = new Evento(nomeEvento, LocalDate.of(anno, mese, giorno), postiTotali);
-            evento.dettagli();
 
-            System.out.println("Scegli quanti posti prenotare: ");
+            System.out.print("Quante prenotazioni vuoi fare: ");
             int numeroPrenotazioni = scan.nextInt();
-            evento.prenotaPosto(numeroPrenotazioni);
-            evento.dettagli();
+            scan.nextLine();
+            if(numeroPrenotazioni > (evento.getPostiTotali() - evento.getPostiPrenotati())){
+                throw new IllegalArgumentException("Non ci sono abbastanza posti disponibili");
+            }
+            for (int i = 0; i < numeroPrenotazioni; i++) {
+                evento.prenotaPosto();
+            }
 
-            System.out.println("Scegli quanti posti prenotare: ");
-            numeroPrenotazioni = scan.nextInt();
-            evento.prenotaPosto(numeroPrenotazioni);
-            evento.dettagli();
-
-            System.out.println("Scegli quanti posti disdire: ");
+            System.out.print("Quante prenotazioni vuoi disdire: ");
             int numeroDisdette = scan.nextInt();
-            evento.disdiciPosti(numeroDisdette);
-            evento.dettagli();
+            scan.nextLine();
+            if(numeroDisdette > evento.getPostiPrenotati()){
+                throw new IllegalArgumentException("Le disdette superano le prenotazioni");
+            }
+            for(int i = 0; i < numeroDisdette; i++){
+                evento.disdiciPosto();
+            }
 
             System.out.println(evento.toString());
 
         } catch (IllegalAccessException | IllegalArgumentException | IllegalStateException e) {
             System.out.println("Errore: " + e.getMessage());
         }
-
-
     }
 }
