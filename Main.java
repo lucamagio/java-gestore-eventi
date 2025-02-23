@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        Concerto concerto;
+        Evento concerto;
 
         System.out.println("Quale evento vuoi proporre: ");
         String nomeEvento = scan.nextLine();
@@ -19,13 +19,25 @@ public class Main {
         System.out.println("Scegli il giorno: ");
         int giorno = scan.nextInt();
 
+        System.out.println("Scegli l'orario specificando prima l'ora e poi i minuti");
+        System.out.print("Ora (0 - 23): ");
+        int ora = scan.nextInt();
+        System.out.print("Minuti (0 - 59): ");
+        int minuti = scan.nextInt();
+
         System.out.println("Scegli la capienza massima: ");
         int postiTotali = scan.nextInt();
+
+        System.out.println("Scegli il costo del biglietto (##,##): ");
+        double costo = scan.nextDouble();
+
+        LocalTime orarioConcerto = LocalTime.of(ora, minuti);
+        LocalDate dataConcerto = LocalDate.of(anno, mese, giorno);
 
         scan.nextLine();
         
         try {
-            concerto = new Concerto(nomeEvento, LocalDate.of(anno, mese, giorno), postiTotali, LocalTime.of(12, 30), 12.54);
+            concerto = new Concerto(nomeEvento, dataConcerto, postiTotali, orarioConcerto, costo);
 
             System.out.print("Quante prenotazioni vuoi fare: ");
             int numeroPrenotazioni = scan.nextInt();

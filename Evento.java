@@ -8,12 +8,15 @@ public class Evento{
     private final int postiTotali;
     private int postiPrenotati;
 
-    public Evento(String titolo, LocalDate data, int postiTotali) throws IllegalArgumentException{
-        if(postiTotali <= 0){
-            throw new IllegalArgumentException("Il numero di posti prenotati dev'essere maggiore di zero");
+    public Evento(String titolo, LocalDate data, int postiTotali) throws IllegalArgumentException, IllegalStateException{
+        if (titolo == null || titolo.trim().isEmpty()) {
+            throw new IllegalArgumentException("Il titolo non può essere vuoto.");
         }
-        if (data.isBefore(LocalDate.now())){
-            throw new IllegalArgumentException("Non si può inserire una data riferita al passato");
+        if(postiTotali <= 0){
+            throw new IllegalArgumentException("Il numero di posti totali dev'essere maggiore di zero");
+        }
+        if (data == null || data.isBefore(LocalDate.now())){
+            throw new IllegalArgumentException("Devi inserire una data riferita ad oggi o ad una data futura");
         }
         this.titolo = titolo;
         this.data = data;
@@ -38,10 +41,16 @@ public class Evento{
     }
 
     public void setTitolo(String titolo) {
+        if (titolo == null || titolo.trim().isEmpty()) {
+            throw new IllegalArgumentException("Il titolo non può essere vuoto.");
+        }
         this.titolo = titolo;
     }
 
     public void setData(LocalDate data) throws IllegalArgumentException{
+        if (data == null) {
+            throw new IllegalArgumentException("La data non può essere nulla.");
+        }
         if (data.isBefore(LocalDate.now())) {
             throw new IllegalArgumentException("Non puoi impostare una data nel passato.");
         }
@@ -72,8 +81,8 @@ public class Evento{
         postiPrenotati--;
     }
 
-    public void dettagli(){
-        System.out.println("Posti prenotati: " + postiPrenotati + ", Posti disponibili: " + (postiTotali - postiPrenotati));
+    public String dettagli(){
+        return "Posti prenotati: " + postiPrenotati + ", Posti disponibili: " + (postiTotali - postiPrenotati);
     }
 
     @Override

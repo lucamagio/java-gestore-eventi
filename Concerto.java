@@ -14,6 +14,7 @@ public class Concerto extends Evento{
         if(prezzo < 0) {
             throw new IllegalArgumentException("Il prezzo non può essere negativo.");
         }
+        
         this.ora = ora;
         this.prezzo = prezzo;
     }
@@ -31,10 +32,16 @@ public class Concerto extends Evento{
     }
 
     public void setPrezzo(double prezzo) {
+        if (prezzo < 0) {
+            throw new IllegalArgumentException("Il prezzo non può essere negativo.");
+        }
         this.prezzo = prezzo;
     }
 
     public String dataOraFormattate(){
+        if (getData() == null || ora == null) {
+            return "Inserire una data o un orario valido";
+        }
         DateTimeFormatter formatoTempo = DateTimeFormatter.ofPattern("HH:mm");
         DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return (getData().format(formatoData) + " - " + ora.format(formatoTempo));
@@ -47,7 +54,7 @@ public class Concerto extends Evento{
 
     @Override
     public String toString() {
-        return (dataOraFormattate() + " - " + getTitolo() + " - " + prezzoFormattato());
+        return (dataOraFormattate() + " - " + getTitolo() + " - " + prezzoFormattato() + "€");
     }
     
     
