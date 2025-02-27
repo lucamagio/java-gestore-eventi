@@ -14,7 +14,7 @@ public class Concerto extends Evento{
         if(prezzo < 0) {
             throw new IllegalArgumentException("Il prezzo non può essere negativo.");
         }
-        
+
         this.ora = ora;
         this.prezzo = prezzo;
     }
@@ -54,8 +54,6 @@ public class Concerto extends Evento{
 
     @Override
     public String toString() {
-        return (dataOraFormattate() + " - " + getTitolo() + " - " + prezzoFormattato() + "€");
+        return (dataOraFormattate() + " - " + getTitolo() + " - " + prezzoFormattato());
     }
-    
-    
 }
